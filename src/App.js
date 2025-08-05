@@ -1,10 +1,24 @@
 import './App.css';
+import Card from './components/Card';
+import Nav from './components/Nav';
+import Hero from './components/Hero';
+import Specials from './components/Specials';
+import Testimonials from './components/testimonials';
+import About from './components/About';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      Homepage
-    </div>
+    <>
+      <Nav/>
+      <main>
+        <Hero/>
+        <Specials/>
+        <Testimonials/>
+        <About/>
+      </main>
+      <Footer/>
+    </>
   );
 }
 
