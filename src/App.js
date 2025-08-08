@@ -3,7 +3,7 @@ import Card from './components/Card';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Specials from './components/Specials';
-import Testimonials from './components/testimonials';
+import Testimonials from './components/Testimonials';
 import About from './components/About';
 import Footer from './components/Footer';
 
