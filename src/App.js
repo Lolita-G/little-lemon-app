@@ -1,5 +1,4 @@
 import './App.css';
-import Card from './components/Card';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Specials from './components/Specials';
@@ -9,7 +8,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <>
+     <>
       <Nav/>
       <main>
         <Hero/>
