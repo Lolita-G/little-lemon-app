@@ -1,4 +1,5 @@
 import LogoFooter from '../assets/images/LogoFooter.png';
+import { Link } from 'react-router-dom';
 
 function Footer() {
     return(
@@ -9,9 +10,9 @@ function Footer() {
         <h3>Little Lemon</h3>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/">About</a></li>
-          <li><a href="/">Specials</a></li>
-          <li><a href="/">Reservations</a></li>
+          <li><a href='/#about'>About</a></li>
+          <li><a href='/#specials'>Specials</a></li>
+          <li><Link to='/booking'>Reservations</Link></li>
         </ul>
       </div>
         <div>
@@ -23,9 +24,9 @@ function Footer() {
       <div>
         <h3>Socials</h3>
         <ul>
-          <li><a href="/">Facebook</a></li>
-          <li><a href="/">Twitter</a></li>
-          <li><a href="/">Instagram</a></li>
+          <li><a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+            <li><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         </ul>
       </div>
         <p className="footer-bottom">© 2025 Little Lemon. All rights reserved. | Developed by Lolita Gorkavenko</p>

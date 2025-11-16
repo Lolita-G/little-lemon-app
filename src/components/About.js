@@ -3,7 +3,7 @@ import Chefs2 from '../assets/images/Chefs2.jpg';
 
 function About() {
   return(
-    <section className='about'>
+    <section className='about' id='about'>
       <div className="container">
         <div>
           <h2>Little Lemon</h2>

@@ -1,12 +1,21 @@
-import RestaurantFood from '../assets/images/restaurantfood.jpg';function Hero() {
+import RestaurantFood from '../assets/images/restaurantfood.jpg';
+import { useNavigate } from 'react-router-dom';
+
+function Hero() {
+  const navigate = useNavigate();
+
     return (
-        <section className='hero'>
+        <section className='hero' id='hero'>
         <div className="container">
         <div className="hero-text">
          <h1>Little Lemon</h1>
          <h2>Chicago</h2>
          <p>We are a family owned Mediterranean restuarant, focused on traditional recipes served with a modern twist.</p>
-         <button className="btn">Reserve Table</button>
+         <button 
+          className="btn"
+          onClick={() => navigate('/booking')}
+         >
+          Reserve Table</button>
         </div> 
          <img 
            src={RestaurantFood} 

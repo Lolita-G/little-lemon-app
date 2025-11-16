@@ -24,6 +24,7 @@ html, body {
   color: var(--secondary-black);
   line-height: 1.5;
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 img {
@@ -501,8 +502,7 @@ nav {
 
 .footer .container {
    display: grid;
-  grid-template-columns: auto 1fr 1fr 1fr;
-  width: 100%;
+  grid-template-columns: auto 1fr 1fr 0fr;
   gap: 40px;
   box-sizing: border-box;
   align-items: start;
@@ -550,4 +550,86 @@ nav {
   text-align: center;
   font-size: 14px;
   color: var(--secondary-white);
+}
+
+/* Booking Form */
+.booking-title {
+  text-align: center;
+  color: var(--primary-green);
+  font-family: var(--font-heading);
+  margin-top: 10px;
+  font-size: 2rem;
+}
+
+.booking-form {
+  max-width: 500px;
+  margin: 40px auto 80px auto;
+  padding: 32px;
+  background-color: var(--secondary-white);
+  border: 1px solid var(--primary-green);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+}
+
+.booking-form fieldset {
+  border: none;
+}
+
+.booking-form .field {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-form label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--primary-green);
+}
+
+.booking-form input,
+.booking-form select {
+  padding: 12px 16px;
+  border: 1px solid var(--primary-green);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: var(--font-main);
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+  outline: none;
+  border-color: var(--primary-yellow);
+  box-shadow: 0 0 0 3px rgba(244,206,20,0.2);
+}
+
+.booking-form p {
+  color: var(--secondary-pink);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.booking-form .btn {
+  width: 100%;
+  margin-top: 12px;
+  font-size: 1.1rem;
+  border: none;
+}
+
+/* СonfirmedBooking */
+.confirmed-booking {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 20px;
+}
+
+.confirmed-card {
+  border: 2px solid var(--primary-green);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 40px 30px;
+  text-align: center;
+  background-color: var(--secondary-white);
 }
