@@ -96,7 +96,6 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
     return (
         <form className="booking-form" onSubmit={handleSubmit} aria-label="Reservation Form">
             <fieldset>
-              <legend>Reserve Your Table</legend>
                 <div className="field">
                     <label htmlFor="firstName">First Name</label>
                     <input 
