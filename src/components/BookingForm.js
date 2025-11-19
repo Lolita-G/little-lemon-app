@@ -28,9 +28,13 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
     case "lastName":
       return !lastName ? "Please enter your last name" : "";
     case "email":
-      return !email ? "Please enter your email" : "";
+      if (!email) return "Please enter your email";
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return !regex.test(email) ? "Please enter a valid email" : "";
     case "phone":
-      return !phone ? "Please enter your phone number" : "";
+      return !phone
+        ? "Please enter your phone number" : phone.length < 10
+        ? "Phone number is too short" : "";
     case "date":
       return !date ? "Please choose a date" : "";
     case "time":
@@ -90,8 +94,9 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
   };
 
     return (
-        <form className="booking-form" onSubmit={handleSubmit}>
+        <form className="booking-form" onSubmit={handleSubmit} aria-label="Reservation Form">
             <fieldset>
+              <legend>Reserve Your Table</legend>
                 <div className="field">
                     <label htmlFor="firstName">First Name</label>
                     <input 
@@ -100,11 +105,13 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value.replace(/[^a-zA-Z\s]/g, ""))}
                       onBlur={() => handleBlur("firstName")}
-                      aria-required="true"
-                      aria-describedby="firstName-error"
+                      required
+                      minLength={2}
+                      aria-describedby="firstName-error"                
+                      aria-label="On Click"
                     />
                     {touched.firstName && getError("firstName") && (
-                      <p>{getError("firstName")}</p>
+                      <p id="firstName-error" role="alert">{getError("firstName")}</p>
                     )}
                 </div>
                 <div className="field">
@@ -115,11 +122,13 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value.replace(/[^a-zA-Z\s]/g, ""))}
                       onBlur={() => handleBlur("lastName")}
-                      aria-required="true"
+                      required
+                      minLength={2}
                       aria-describedby="lastName-error"
+                      aria-label="On Click"
                     />
                       {touched.lastName && getError("lastName") && (
-                        <p>{getError("lastName")}</p>
+                        <p id="lastName-error" role="alert">{getError("lastName")}</p>
                       )}
                 </div>
                 <div className="field">
@@ -130,11 +139,12 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       onBlur={() => handleBlur("email")}
-                      aria-required="true"
+                      required
                       aria-describedby="email-error"
+                      aria-label="On Click"
                     />
                     {touched.email && getError("email") && (
-                      <p>{getError("email")}</p>
+                      <p id="email-error" role="alert">{getError("email")}</p>
                     )}
                 </div>
                 <div className="field">
@@ -148,11 +158,13 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                         if (value.length <= 12) setPhone(value);
                         }}
                       onBlur={() => handleBlur("phone")}
-                      aria-required="true"
+                      required
+                      minLength={10}
                       aria-describedby="phone-error"
+                      aria-label="On Click"
                     />
                     {touched.phone && getError("phone") && (
-                      <p>{getError("phone")}</p>
+                      <p id="phone-error" role="alert">{getError("phone")}</p>
                     )}
                 </div>
                 <div className="field">
@@ -167,11 +179,12 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                         dispatch({ type: "UPDATE_TIMES", date: e.target.value });
                       }}
                       onBlur={() => handleBlur("date")}
-                      aria-required="true"
+                      required
                       aria-describedby="date-error"
+                      aria-label="On Click"
                     />
                     {touched.date && getError("date") && (
-                      <p>{getError("date")}</p>
+                      <p id="date-error" role="alert">{getError("date")}</p>
                     )}
                 </div>
                 <div className="field">
@@ -181,8 +194,9 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       value={time} 
                       onChange={(e) => setTime(e.target.value)}
                       onBlur={() => handleBlur("time")}
-                      aria-required="true"
+                      required
                       aria-describedby="time-error"
+                      aria-label="On Click"
                     >
                       <option value="">Select a time</option>
                       {availableTimes.map((t) => (
@@ -192,7 +206,7 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       ))}
                     </select>
                     {touched.time && getError("time") && (
-                      <p>{getError("time")}</p>
+                      <p id="time-error" role="alert">{getError("time")}</p>
                     )}
                 </div>
                 <div className="field">
@@ -205,11 +219,12 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       value={guests}
                       onChange={(e) => setGuests(e.target.value)}
                       onBlur={() => handleBlur("guests")}
-                      aria-required="true"
+                      required
                       aria-describedby="guests-error"
+                      aria-label="On Click"
                     />
                     {touched.guests && getError("guests") && (
-                      <p>{getError("guests")}</p>
+                      <p id="guests-error" role="alert">{getError("guests")}</p>
                     )}
                 </div>
                 <div className="field">
@@ -218,6 +233,7 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       id="occasion"
                       value={occasion}
                       onChange={(e) => setOccasion(e.target.value)}
+                      aria-label="On Click" 
                     >
                         <option value="">Select an occasion</option>
                         <option>Birthday</option>
@@ -230,6 +246,7 @@ function BookingForm ({ availableTimes, dispatch, submitForm }){
                       value="Make Your reservation"
                       className="btn"
                       disabled={!getIsFormValid()}
+                      aria-label="Submit reservation" 
                       />
                 </div>
             </fieldset>

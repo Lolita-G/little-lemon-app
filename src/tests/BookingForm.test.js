@@ -37,7 +37,7 @@ test("renders all available times in the select dropdown", () => {
     times.forEach((time) => {
       const option = screen.getByText(time);
       expect(option).toBeInTheDocument();
-      expect(option.tagName).toBe("OPTION"); // проверяем, что это действительно option
+      expect(option.tagName).toBe("OPTION"); 
     });
   });
 
@@ -50,26 +50,22 @@ test("BookingForm can be submitted by the user", () => {
         submitForm={mockSubmitForm}
         />);
 
-    // Заполняем форму
     fireEvent.change(screen.getByLabelText(/First Name/i), { target: { value: "Lolita" } });
     fireEvent.change(screen.getByLabelText(/Last Name/i), { target: { value: "Smith" } });
     fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: "lolita@example.com" } });
     fireEvent.change(screen.getByLabelText(/Phone number/i), { target: { value: "1234567890" } });
     fireEvent.change(screen.getByLabelText(/Choose date/i), { target: { value: "2025-11-15" } });
 
-    // Берём первый доступный вариант времени из селекта
     const timeOptions = screen.getAllByRole("option");
-    const availableTimeOption = timeOptions.find(opt => opt.value !== ""); // берём первый рабочий вариант
+    const availableTimeOption = timeOptions.find(opt => opt.value !== ""); 
     fireEvent.change(screen.getByLabelText(/Choose time/i), { target: { value: availableTimeOption.value } });
 
 
     fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: "2" } });
     fireEvent.change(screen.getByLabelText(/Occasion/i), { target: { value: "Birthday" } });
 
-    // Отправляем форму
     fireEvent.click(screen.getByText(/Make Your reservation/i));
 
-    // Проверяем, что dispatch и submitForm были вызваны
     expect(mockDispatch).toHaveBeenCalled();
     expect(mockSubmitForm).toHaveBeenCalled();
   });
@@ -85,7 +81,7 @@ describe("BookingPage functions", () => {
 
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
-    expect(result).toContain(result[0]); // проверяем, что массив не пустой
+    expect(result).toContain(result[0]); 
   });
 
   test("updateTimes returns new available times for a given date", () => {
@@ -96,5 +92,75 @@ describe("BookingPage functions", () => {
 
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
+  });
+});
+
+// =============== HTML5 VALIDATION TESTS =====================
+describe("BookingForm HTML5 validation", () => {
+  test("First Name input has required and minLength attributes", () => {
+    render(<BookingForm availableTimes={initializeTimes()} dispatch={() => {}} submitForm={() => {}} />);
+
+    const firstNameInput = screen.getByLabelText(/First Name/i);
+    expect(firstNameInput).toHaveAttribute("required");
+    expect(firstNameInput).toHaveAttribute("minlength", "2");
+  });
+
+  test("Email input has correct type=email", () => {
+    render(<BookingForm availableTimes={initializeTimes()} dispatch={() => {}} submitForm={() => {}} />);
+
+    const emailInput = screen.getByLabelText(/Email/i);
+    expect(emailInput).toHaveAttribute("type", "email");
+    expect(emailInput).toHaveAttribute("required");
+  });
+
+  test("Number of guests has min=1 and max=10", () => {
+    render(<BookingForm availableTimes={initializeTimes()} dispatch={() => {}} submitForm={() => {}} />);
+
+    const guestsInput = screen.getByLabelText(/Number of guests/i);
+    expect(guestsInput).toHaveAttribute("min", "1");
+    expect(guestsInput).toHaveAttribute("max", "10");
+  });
+});
+
+
+// =============== JAVASCRIPT VALIDATION TESTS =====================
+describe("BookingForm JS validation", () => {
+  test("returns invalid state if required fields are empty", () => {
+    const mockSubmit = jest.fn();
+    render(
+      <BookingForm
+        availableTimes={initializeTimes()}
+        dispatch={() => {}}
+        submitForm={mockSubmit}
+      />
+    );
+    fireEvent.click(screen.getByText(/Make Your reservation/i));
+    expect(mockSubmit).not.toHaveBeenCalled();
+  });
+
+  test("returns valid state when all fields are filled correctly", () => {
+    const mockSubmit = jest.fn();
+    render(
+      <BookingForm
+        availableTimes={initializeTimes()}
+        dispatch={() => {}}
+        submitForm={mockSubmit}
+      />
+    );
+
+    fireEvent.change(screen.getByLabelText(/First Name/i), { target: { value: "John" } });
+    fireEvent.change(screen.getByLabelText(/Last Name/i), { target: { value: "Doe" } });
+    fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: "john@example.com" } });
+    fireEvent.change(screen.getByLabelText(/Phone number/i), { target: { value: "12345678" } });
+    fireEvent.change(screen.getByLabelText(/Choose date/i), { target: { value: "2025-11-20" } });
+
+    const timeOption = screen.getAllByRole("option")[1];
+    fireEvent.change(screen.getByLabelText(/Choose time/i), { target: { value: timeOption.value } });
+
+    fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: "2" } });
+    fireEvent.change(screen.getByLabelText(/Occasion/i), { target: { value: "Birthday" } });
+
+    fireEvent.click(screen.getByText(/Make Your reservation/i));
+    expect(mockSubmit).toHaveBeenCalled();
   });
 });
